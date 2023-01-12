@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
+import "../styles/chat.css";
 
 export const Chat = ({ room }) => {
 	const [newMessage, setNewMessage] = useState("");
