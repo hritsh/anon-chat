@@ -16,7 +16,7 @@ function App() {
 	) : (
 		<div>
 			{room ? (
-				<Chat />
+				<Chat room={room} />
 			) : (
 				<div className="room">
 					<label>Enter Room Name: </label>
