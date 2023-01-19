@@ -35,9 +35,15 @@ export const Chat = ({ room }) => {
 	};
 	return (
 		<div className="chat-app">
+			<div className="header">
+				<h1>Room name: {room.toUpperCase()}</h1>
+			</div>
 			<div className="messages">
 				{messages.map((message) => (
-					<h1>{message.text}</h1>
+					<div key={message.id} className="message">
+						<span className="user">{message.user}</span>
+						{message.text}
+					</div>
 				))}
 			</div>
 			<form className="new-message-form" onSubmit={handleSubmit}>
