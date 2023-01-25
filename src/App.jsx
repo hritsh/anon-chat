@@ -21,7 +21,7 @@ function App() {
 		setRoom(null);
 	};
 
-	return isAuth ? (
+	return !isAuth ? (
 		<div>
 			<Auth setIsAuth={setIsAuth} />
 		</div>
