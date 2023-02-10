@@ -10,6 +10,7 @@ import {
   Timestamp,
   deleteDoc,
   getDocs,
+  doc,
 } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import "../styles/chat.css";
@@ -20,6 +21,7 @@ export const Chat = ({ room }) => {
   const messagesRef = collection(db, "messages");
 
   useEffect(() => {
+    deleteOldMessages();
     const queryMessages = query(
       messagesRef,
       where("room", "==", room),
@@ -35,12 +37,16 @@ export const Chat = ({ room }) => {
     return () => unsubscribe();
   }, []);
 
+  const deleteMessage = async (message) => {
+    await deleteDoc(doc(db, "messages", message.id));
+  };
+
   const deleteOldMessages = async () => {
     // Get the current timestamp
     const currentTimestamp = Timestamp.now();
     // Subtract 1 hour in milliseconds
     const oneHourAgo = new Timestamp(
-      currentTimestamp.seconds - 5,
+      currentTimestamp.seconds - 3600,
       currentTimestamp.nanoseconds
     );
     // Get all messages older than 1 hour
@@ -77,6 +83,9 @@ export const Chat = ({ room }) => {
           <div key={message.id} className="message">
             <span className="user">{message.user}</span>
             {message.text}
+            <button className="delete" onClick={() => deleteMessage(message)}>
+              Delete
+            </button>
           </div>
         ))}
       </div>
